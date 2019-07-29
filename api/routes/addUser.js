@@ -1,4 +1,4 @@
-var mongoos = require('mongoose');
+var mongoose = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
@@ -18,10 +18,29 @@ router.post('/', function(req, res, next) {
                          '\nEmail: ' + email;
 
     // This is where we would send this data to the MongoDB
-    var dbConnect = mongoose.connect('mongodb://localhost:27017/users', {useNewUrlParser: true});
-    if (dbConnect) {
-        console.log('Databased successfully connected');
-    }
+    mongoose.connect('mongodb://localhost:27017/dinogram', {useNewUrlParser: true});
+    var db = mongoose.connection;
+    db.on('error', console.error.bind(console, 'connection error:'));
+    db.once('open', function() {
+        var userSchema = new mongoose.Schema({
+            First: String,
+            Last: String,
+            Email: String,
+            Birthday: String
+        })
+        var User = mongoose.model('User', userSchema);
+        var currentUser = new User({
+            First: firstName,
+            Last: lastName,
+            Email: email,
+            Birthday: ''
+        });
+        currentUser.save(function (err, event) {
+            if (err) {
+                return console.error(err);10
+            }
+        })
+    });
 
     res.send(responseString);
 });
