@@ -7,6 +7,10 @@ from pymongo import MongoClient
 
 def main():
 
+    # Script Purpose:
+    # Manual CLI program that appends new user to dinogram mailing list
+    # via connection to a MongoDB instance.
+
     print('Beginning user add program...')
 
     client = MongoClient('localhost', 27017)
