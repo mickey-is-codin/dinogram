@@ -1,3 +1,4 @@
+var mongoos = require('mongoose');
 var express = require('express');
 var router = express.Router();
 
@@ -17,6 +18,10 @@ router.post('/', function(req, res, next) {
                          '\nEmail: ' + email;
 
     // This is where we would send this data to the MongoDB
+    var dbConnect = mongoose.connect('mongodb://localhost:27017/users', {useNewUrlParser: true});
+    if (dbConnect) {
+        console.log('Databased successfully connected');
+    }
 
     res.send(responseString);
 });
