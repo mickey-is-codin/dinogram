@@ -12,22 +12,19 @@ router.post('/', function(req, res, next) {
     var lastName = req.body.last;
     var email = req.body.email;
 
-    var responseString = 'Backend response: ' +
-                         '\nFirst: ' + firstName +
-                         '\nLast:  ' + lastName +
-                         '\nEmail: ' + email;
-
-    // This is where we would send this data to the MongoDB
     mongoose.connect('mongodb://localhost:27017/dinogram', {useNewUrlParser: true});
     var db = mongoose.connection;
+
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function() {
+
         var userSchema = new mongoose.Schema({
             First: String,
             Last: String,
             Email: String,
             Birthday: String
-        })
+        });
+
         var User = mongoose.model('User', userSchema);
         var currentUser = new User({
             First: firstName,
@@ -35,14 +32,16 @@ router.post('/', function(req, res, next) {
             Email: email,
             Birthday: ''
         });
+
         currentUser.save(function (err, event) {
             if (err) {
                 return console.error(err);10
+            } else {
+                res.send('success');
             }
         })
     });
 
-    res.send(responseString);
 });
 
 module.exports = router;
