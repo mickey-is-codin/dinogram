@@ -53,14 +53,17 @@ function NavBar(props) {
 
 function Introduction(props) {
     return (
-        <div className="jumbotron my-4 mx-4">
-            <h1 className="display-3"> Dino of the Day </h1>
+        <div class="row justify-content-md-center">
+            <div className="jumbotron mx-4 my-4 col-xl-4 col-lg-8 col-md-10 col-sm-10 col-xs-10">
 
-            <hr className="my-4" ></hr>
+                <h1 className="display-3"> Dino of the Day </h1>
 
-            <p className="lead">
-                Welcome to Dino of the Day, the only website that brings you a different dino every single day!
-            </p>
+                <hr className="my-4" ></hr>
+
+                <p className="lead">
+                    Welcome to Dino of the Day, the only website that brings you a different dino every single day!
+                </p>
+            </div>
         </div>
     );
 }
@@ -105,9 +108,9 @@ class SignupForm extends React.Component {
             email: this.state.user.email
         }
 
-        var testURL = 'http://localhost:9000/testAPI';
+        var userURL = 'http://localhost:9000/addUser';
 
-        fetch(testURL, {
+        fetch(userURL, {
             method: 'POST',
             body: JSON.stringify(postData),
             headers: {
@@ -124,60 +127,63 @@ class SignupForm extends React.Component {
 
     render() {
         return (
-            <div className="jumbotron my-4 mx-4">
 
-                <h1 className="display-3"> Join the Mailing List </h1>
+            <div class="row justify-content-md-center">
+                <div className="jumbotron mx-4 my-4 col-xl-4 col-lg-8 col-md-10 col-sm-10 col-xs-10">
 
-                <hr className="my-4"></hr>
+                    <h1 className="display-3"> Join the Mailing List </h1>
 
-                <div className="form-group">
-                    <form onSubmit={this.handleSubmit}>
+                    <hr className="my-4"></hr>
 
-                        <label
-                            className="justify-left"
-                            htmlFor="firstName"
-                        >First Name</label>
-                        <input
-                            type="text"
-                            value={this.state.firstName}
-                            onChange={this.handleChange.bind(this, 'firstName')}
-                            className="form-control"
-                            placeholder="Enter First Name"
-                        />
+                    <div className="form-group">
+                        <form onSubmit={this.handleSubmit}>
 
-                        <label
-                            className="justify-left"
-                            htmlFor="lastName"
-                        >Last Name</label>
-                        <input
-                            type="text"
-                            value={this.state.lastName}
-                            onChange={this.handleChange.bind(this, 'lastName')}
-                            className="form-control"
-                            placeholder="Enter Last Name"
-                        />
+                            <label
+                                className="justify-left"
+                                htmlFor="firstName"
+                            >First Name</label>
+                            <input
+                                type="text"
+                                value={this.state.firstName}
+                                onChange={this.handleChange.bind(this, 'firstName')}
+                                className="form-control"
+                                placeholder="Enter First Name"
+                            />
 
-                        <label
-                            className="justify-left"
-                            htmlFor="lastName"
-                        >Email</label>
-                        <input
-                            type="text"
-                            value={this.state.email}
-                            onChange={this.handleChange.bind(this, 'email')}
-                            className="form-control"
-                            placeholder="Enter Email"
-                        />
+                            <label
+                                className="justify-left"
+                                htmlFor="lastName"
+                            >Last Name</label>
+                            <input
+                                type="text"
+                                value={this.state.lastName}
+                                onChange={this.handleChange.bind(this, 'lastName')}
+                                className="form-control"
+                                placeholder="Enter Last Name"
+                            />
 
-                        <button type="submit" className="btn btn-primary my-4">Submit</button>
+                            <label
+                                className="justify-left"
+                                htmlFor="lastName"
+                            >Email</label>
+                            <input
+                                type="text"
+                                value={this.state.email}
+                                onChange={this.handleChange.bind(this, 'email')}
+                                className="form-control"
+                                placeholder="Enter Email"
+                            />
 
-                        <p>
-                            {this.state.apiResponse}
-                        </p>
+                            <button type="submit" className="btn btn-primary my-4">Submit</button>
 
-                    </form>
+                            <p>
+                                {this.state.apiResponse}
+                            </p>
+
+                        </form>
+                    </div>
+
                 </div>
-
             </div>
         );
     }
