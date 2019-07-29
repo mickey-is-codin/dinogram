@@ -53,7 +53,7 @@ function NavBar(props) {
 
 function Introduction(props) {
     return (
-        <div class="row justify-content-md-center">
+        <div className="row justify-content-md-center">
             <div className="jumbotron mx-4 my-4 col-xl-4 col-lg-8 col-md-10 col-sm-10 col-xs-10">
 
                 <h1 className="display-3"> Dino of the Day </h1>
@@ -128,7 +128,7 @@ class SignupForm extends React.Component {
     render() {
         return (
 
-            <div class="row justify-content-md-center">
+            <div className="row justify-content-md-center">
                 <div className="jumbotron mx-4 my-4 col-xl-4 col-lg-8 col-md-10 col-sm-10 col-xs-10">
 
                     <h1 className="display-3"> Join the Mailing List </h1>
