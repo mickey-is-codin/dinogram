@@ -176,9 +176,11 @@ class SignupForm extends React.Component {
 
                             <button type="submit" className="btn btn-primary my-4">Submit</button>
 
-                            <p>
-                                {this.state.apiResponse}
-                            </p>
+                            {this.state.apiResponse === "success" &&
+                                <div class="alert alert-primary" role="alert">
+                                    You've been successfully added to the mailing list, this.state.user.firstName!
+                                </div>
+                            }
 
                         </form>
                     </div>
