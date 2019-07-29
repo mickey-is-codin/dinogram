@@ -1,0 +1,61 @@
+.body {
+    background-image: url(./img/mist.jpg);
+    background-position-x: center;
+    background-position-y: center;
+    background-size: cover;
+    background-repeat-x: initial, initial;
+    background-repeat-y: initial, initial;
+    background-attachment: fixed;
+    background-origin: initial, initial;
+    background-clip: initial;
+    background-color: initial;
+}
+
+.navbar {
+    background-color: rgba(110, 182, 186, 0.75);
+    color: black;
+}
+
+.navbar .dropdown-menu {
+    border-color: rgba(0, 0, 0, 0);
+    background-color: rgba(110, 182, 186, 0);
+}
+
+.navbar .dropdown-menu > a {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.navbar .dropdown-menu > a:hover {
+    background-color: rgba(0, 0, 0, 0);
+    color: rgba(0, 0, 0, 1);
+}
+
+.jumbotron {
+    color: #000000;
+    background: rgba(110, 182, 186, 0.75);
+}
+
+.jumbotron h1 {
+    text-align: center;
+}
+
+.jumbotron p {
+    text-align: center;
+}
+
+.jumbotron hr {
+    border-color: #000000;
+}
+
+.jumbotron input, select, textarea{
+    color: #000000;
+}
+
+.jumbotron textarea:focus, input:focus {
+    color: #000000;
+}
+
+.jumbotron .input-help {
+    color: rgba(0, 0, 0, 0.75);
+    text-align: left;
+}
