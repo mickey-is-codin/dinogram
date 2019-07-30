@@ -5,6 +5,7 @@
 *.cert
 *.crt
 *.pem
+*.cnf
 
 # Directories
 **/node_modules
