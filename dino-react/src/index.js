@@ -108,7 +108,7 @@ class SignupForm extends React.Component {
             email: this.state.user.email
         }
 
-        var userURL = 'http://localhost:9000/addUser';
+        var userURL = 'http://18.216.167.113:9000/addUser';
 
         fetch(userURL, {
             method: 'POST',
@@ -177,11 +177,15 @@ class SignupForm extends React.Component {
                             <button type="submit" className="btn btn-primary my-4">Submit</button>
 
                             {this.state.apiResponse === "success" &&
-                                <div class="alert alert-primary" role="alert">
-                                    You've been successfully added to the mailing list, this.state.user.firstName!
+                                <div className="alert alert-primary" role="alert">
+                                    You've been successfully added to the mailing list, {this.state.user.firstName}!
                                 </div>
                             }
-
+		
+		            <p>
+		                {this.state.apiResponse}
+		            </p>
+                            
                         </form>
                     </div>
 
