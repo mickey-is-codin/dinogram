@@ -19,7 +19,7 @@ from email.mime.text import MIMEText
 import pymongo
 from pymongo import MongoClient
 
-log_file = open('/home/mickey/dino_log.txt', 'w+')
+log_file = open('/home/ubuntu/dino_log.txt', 'w+')
 
 def main():
 
@@ -102,7 +102,7 @@ def send_dinogram(email_html, dino_base):
         message_text = MIMEText(email_html, 'html')
         message.attach(message_text)
 
-        smtp_server.sendmail(from_email, member, message.as_string())
+        #smtp_server.sendmail(from_email, member, message.as_string())
 
     log_file.write('Finished sending mail!\n')
     log_file.flush()
@@ -113,6 +113,7 @@ def fetch_creds(dino_base):
     senders_coll = dino_base.senders
     email  = senders_coll.find()[0]['Email']
     passwd = senders_coll.find()[0]['Passwd']
+    print(email, passwd)
 
     return email, passwd
 
