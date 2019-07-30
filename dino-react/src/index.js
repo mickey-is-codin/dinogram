@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import './index.css';
 
+//var https = require('https');
+
 function NavBar(props) {
     return (
     <nav className="navbar navbar-expand-lg navbar-light">
@@ -96,10 +98,7 @@ class SignupForm extends React.Component {
     }
 
     handleSubmit(event) {
-        var alertMessage = 'First: ' + this.state.user.firstName +
-                       '\nLast: ' + this.state.user.lastName +
-                       '\nEmail: ' + this.state.user.email;
-        alert(alertMessage);
+
         event.preventDefault();
 
         var postData = {
@@ -108,7 +107,7 @@ class SignupForm extends React.Component {
             email: this.state.user.email
         }
 
-        var userURL = 'http://18.216.167.113:9000/addUser';
+        var userURL = 'https://dinogram.org:9010/addUser';
 
         fetch(userURL, {
             method: 'POST',
@@ -181,10 +180,11 @@ class SignupForm extends React.Component {
                                     You've been successfully added to the mailing list, {this.state.user.firstName}!
                                 </div>
                             }
-		
-		            <p>
-		                {this.state.apiResponse}
-		            </p>
+                            {this.state.apiResponse === "repeat" &&
+                                <div className="alert alert-danger" role="alert">
+                                    You have already been added to the mailing list.
+                                </div>
+                            }
                             
                         </form>
                     </div>
@@ -199,7 +199,7 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <NavBar />
+                {/*<NavBar />*/}
                 <Introduction />
                 <SignupForm />
             </div>
