@@ -1,6 +1,10 @@
 # File extensions
 *.json
 *.log
+*.key
+*.cert
+*.crt
+*.pem
 
 # Directories
 **/node_modules
