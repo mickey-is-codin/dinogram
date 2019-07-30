@@ -102,7 +102,7 @@ def send_dinogram(email_html, dino_base):
         message_text = MIMEText(email_html, 'html')
         message.attach(message_text)
 
-        #smtp_server.sendmail(from_email, member, message.as_string())
+        smtp_server.sendmail(from_email, member, message.as_string())
 
     log_file.write('Finished sending mail!\n')
     log_file.flush()
