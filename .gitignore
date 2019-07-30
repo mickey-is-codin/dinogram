@@ -1,5 +1,6 @@
 # File extensions
 *.json
+*.log
 
 # Directories
 **/node_modules
