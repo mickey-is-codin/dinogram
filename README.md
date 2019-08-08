@@ -8,13 +8,9 @@ This is the tracking repository for <a href="https://dinogram.org">Dinogram</a>,
 
 <p> Application Features </p>
 
-<ul>
-    
-    <li>Python Selenium+Geckodriver web crawler used to navigate JS page</li>
-    <li>SMTP mailing program interacting with MongoDB to mail newsletter to all subscribed users</li>
-    <li>ReactJS+ExpressJS web application to allow users to sign up friends for the newsletter and unsubscribe</li>
-
-</ul>
+* Python Selenium+Geckodriver web crawler used to navigate JS page
+* SMTP mailing program interacting with MongoDB to mail newsletter to all subscribed users
+* ReactJS+ExpressJS web application to allow users to sign up friends for the newsletter and unsubscribe
 
 <p> Images of the Dinogram </p>
 
