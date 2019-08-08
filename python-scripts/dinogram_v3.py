@@ -111,9 +111,8 @@ def send_dinogram(email_html, dino_base):
 def fetch_creds(dino_base):
 
     senders_coll = dino_base.senders
-    email  = senders_coll.find()[0]['Email']
-    passwd = senders_coll.find()[0]['Passwd']
-    print(email, passwd)
+    email  = senders_coll.find()[1]['Email']
+    passwd = senders_coll.find()[1]['Passwd']
 
     return email, passwd
 
@@ -167,6 +166,11 @@ def build_html(dino_name, paragraphs, image_links, dino_base):
             \t\t\t\t<p><font face="courier">
             \t\t\t\t\t'''+paragraph+'''
             \t\t\t\t</font></p>\n'''
+
+    body = body + '''
+            \t\t\t\t<p>
+            \t\t\t\t\t<small><a href="https://dinogram.org/unsub">Unsubscribe from Dinogram</a></small>
+            \t\t\t\t</p>'''
 
     if len(paragraphs) == 0:
         body = body + '''\
