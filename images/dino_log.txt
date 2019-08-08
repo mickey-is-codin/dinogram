@@ -1,0 +1,25 @@
+
+Beginning program execution for 2019-08-08 13:44:36.968169...
+Attempting to establish webdriver...
+Accessing wikipedia list...
+Found 1610 dinosaurs on wikipedia page
+
+Accessing picture site list...
+Found 1082 dinosaurs on picture site
+
+Found 851 dinosaurs shared between both sites...
+Random dinosaur: Tazoudasaurus
+
+Wikipedia article url: https://en.wikipedia.org/wiki/Tazoudasaurus
+Pictures site url: https://dinosaurpictures.org/Tazoudasaurus-pictures
+
+Sending dinogram to mailing list
+Mailing to smithmick14@gmail.com
+Mailing to mollyagreen415@gmail.com
+Mailing to marykaymahoney@comcast.net
+Mailing to achesney@google.com
+Mailing to hale.ben422@gmail.com
+Mailing to smitty4420@gmail.com
+Mailing to bradlytle@gmail.com
+Mailing to michaelsmart1995@gmail.com
+Mailing to mattschmidt89@gmail.com
