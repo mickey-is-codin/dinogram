@@ -10,6 +10,7 @@
 # Directories
 **/node_modules
 node_modules/
+logs/
 
 # dependencies
 /node_modules
@@ -21,6 +22,9 @@ node_modules/
 
 # production
 /build
+
+# pyenv
+.python-version
 
 # misc
 .DS_Store
