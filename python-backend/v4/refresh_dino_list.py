@@ -118,7 +118,6 @@ def filter_wiki_list(wiki_dinos, dev=False):
             result = pictures_request.json()
             valid_dino = result["name"]
             valid_dinos.append(valid_dino)
-            break
 
     return valid_dinos
 
