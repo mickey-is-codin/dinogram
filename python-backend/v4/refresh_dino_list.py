@@ -47,18 +47,43 @@ def main():
     log_file.write("Success! Dino list now contains {} dinosaurs\n".format(list_size))
     log_file.flush()
 
+    log_file.close()
+
 def write_dino_list(dino_list, dev=False):
 
     dino_list_path = "valid_dinos.csv"
 
+    pictures_root = "http://dinosaurpictures.org/api/dinosaur/"
+
     list_size = 0
-    with open(dino_list_path, "wb") as list_file:
-        header = "dinos\n".encode()
+    with open(dino_list_path, "w") as list_file:
+        header = "dinos, pic_urls, wiki_article\n"
         list_file.write(header)
         for name in dino_list:
-            line_string = name+"\n"
-            line_string = line_string.encode()
-            list_file.write(line_string)
+
+            name_string = name+", "
+            list_file.write(name_string)
+
+            urls = []
+            dino_request = requests.get(pictures_root+name)
+
+            for pics in dino_request.json()["pics"]:
+                voting_url = pics["votingUrl"]
+                url_string = "{} ".format(voting_url)
+                list_file.write(url_string)
+            list_file.write(", ")
+
+            article_paragraphs = scrape_article(name)
+            article = "...".join(article_paragraphs)
+            article = article.replace("\"", "\"\"")
+            article = article.replace("\n", "...")
+            article = "\"" + article + "\""
+            article = article
+
+            list_file.write(article)
+
+            list_file.write("\n")
+
             list_size += 1
 
     if dev:
@@ -66,6 +91,19 @@ def write_dino_list(dino_list, dev=False):
 
     return list_size
 
+def scrape_article(dino_string):
+
+    base_url = 'https://en.wikipedia.org/wiki/'
+    article_url = base_url + dino_string
+
+    article_result = requests.get(article_url)
+    article_content = article_result.content
+    article_soup = BeautifulSoup(article_content, 'html.parser')
+
+    article_paragraphs = [p_elem.get_text() for p_elem in article_soup.find_all('p')]
+    article_paragraphs = [para for para in article_paragraphs if len(para) > 15]
+
+    return article_paragraphs
 
 def filter_wiki_list(wiki_dinos, dev=False):
 
@@ -80,6 +118,7 @@ def filter_wiki_list(wiki_dinos, dev=False):
             result = pictures_request.json()
             valid_dino = result["name"]
             valid_dinos.append(valid_dino)
+            break
 
     return valid_dinos
 
