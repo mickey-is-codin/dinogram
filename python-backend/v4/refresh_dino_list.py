@@ -6,7 +6,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
-log_file = open("../../logs/refresh.txt", "w+")
+log_file = open("/home/ubuntu/DinoProject/DinoTracked/logs/refresh.txt", "w+")
 
 def main():
 
@@ -51,8 +51,7 @@ def main():
 
 def write_dino_list(dino_list, dev=False):
 
-    dino_list_path = "dino-list/valid_dinos.csv"
-    list_size_path = "dino-list/num_dinos.txt"
+    dino_list_path = "/home/ubuntu/DinoProject/DinoTracked/python-backend/v4/dino-list/valid_dinos.csv"
 
     pictures_root = "http://dinosaurpictures.org/api/dinosaur/"
 

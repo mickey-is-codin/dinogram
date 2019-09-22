@@ -1,3 +1,4 @@
+import datetime
 import random
 
 import pandas as pd
@@ -12,43 +13,67 @@ from email.mime.text import MIMEText
 import pymongo
 from pymongo import MongoClient
 
-log_file = open("../../logs/refresh.txt", "w+")
+log_file = open("/home/ubuntu/DinoProject/DinoTracked/logs/mailing.txt", "w+")
 
 def main():
 
-    dino_list_path = "dino-list/valid_dinos.csv"
+    log_file.write('\nEmailing to list on {}...\n'.format(datetime.datetime.now()))
+    log_file.flush()
+
 
     # Read in dino csv file
+    log_file.write("\nReading in dinsaur list...")
+    dino_list_path = "/home/ubuntu/DinoProject/DinoTracked/python-backend/v4/dino-list/valid_dinos.csv"
     dino_df = pd.read_csv(dino_list_path)
     num_dinos = dino_df.shape[0]
+    log_file.write("Success!")
+    log_file.flush()
 
     # Pick a random dinosaur from file
+    log_file.write("\nChoosing random dinosaur from list...")
     random_ix = random.randint(0, num_dinos)
     random_dino_string = dino_df.iloc[random_ix,:]["dino_name"]
+    log_file.write("{}...".format(random_dino_string))
+    log_file.write("Success!")
+    log_file.flush()
 
     # Retrieve the picture urls
+    log_file.write("\nScraping images for dinosaur...\n")
     image_links = scrape_image_links(random_dino_string)
+    for link in image_links:
+        log_file.write(link+"\n")
+    log_file.write("Success!")
+    log_file.flush()
 
     # Retrieve the wikipedia articles
+    log_file.write("\nScraping article for dinosaur...")
     article_paragraphs = scrape_article(random_dino_string)
+    log_file.write("Success!")
+    log_file.flush()
 
     # Open connection to MongoDB
+    log_file.write("\nConnecting to MongoDB instance...")
     client = MongoClient('localhost', 27017)
     dino_base = client.dinogram
+    log_file.write("Success!")
+    log_file.flush()
 
-    # # Build the actual html document that will comprise the email
-    email_html = build_html(dino_name, wiki_paragraphs, image_links, dino_base)
+    # Build the actual html document that will comprise the email
+    log_file.write("\nBuilding email HTML...")
+    email_html = build_html(random_dino_string, article_paragraphs, image_links, dino_base)
+    log_file.write("Success!")
+    log_file.flush()
 
     # Send the email
+    log_file.write("\nSending email to list...\n")
     send_dinogram(email_html, dino_base)
+    log_file.write("Success!")
+    log_file.flush()
 
     log_file.close()
     client.close()
 
 def send_dinogram(email_html, dino_base):
-
-    log_file.write('Sending dinogram to mailing list\n')
-    log_file.flush()
 
     gmail_address, gmail_passwd = fetch_creds(dino_base)
 
@@ -171,8 +196,11 @@ def scrape_image_links(dino_string):
 
     dino_request = requests.get(dino_endpoint)
     dino_json = dino_request.json()
-
-    image_links = [pic["votingUrl"] for pic in dino_json["pics"]]
+    image_links = []
+    for pic in dino_json["pics"]:
+        pic_request = requests.get(pic["url"])
+        if pic_request.status_code == 200:
+            image_links.append(pic["url"])
 
     return image_links
 
