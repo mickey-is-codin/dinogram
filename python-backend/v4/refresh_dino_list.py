@@ -51,36 +51,40 @@ def main():
 
 def write_dino_list(dino_list, dev=False):
 
-    dino_list_path = "valid_dinos.csv"
+    dino_list_path = "dino-list/valid_dinos.csv"
+    list_size_path = "dino-list/num_dinos.txt"
 
     pictures_root = "http://dinosaurpictures.org/api/dinosaur/"
 
     list_size = 0
     with open(dino_list_path, "w") as list_file:
-        header = "dinos, pic_urls, wiki_article\n"
+        header = "ix,dino_name\n"
         list_file.write(header)
         for name in dino_list:
 
-            name_string = name+", "
+            if dev:
+                print("Making csv entry for {}".format(name))
+
+            name_string = str(list_size)+","+name
             list_file.write(name_string)
 
-            urls = []
-            dino_request = requests.get(pictures_root+name)
+            # urls = []
+            # dino_request = requests.get(pictures_root+name)
 
-            for pics in dino_request.json()["pics"]:
-                voting_url = pics["votingUrl"]
-                url_string = "{} ".format(voting_url)
-                list_file.write(url_string)
-            list_file.write(", ")
+            # for pics in dino_request.json()["pics"]:
+            #     voting_url = pics["votingUrl"]
+            #     url_string = "{} ".format(voting_url)
+            #     list_file.write(url_string)
+            # list_file.write(", ")
 
-            article_paragraphs = scrape_article(name)
-            article = "...".join(article_paragraphs)
-            article = article.replace("\"", "\"\"")
-            article = article.replace("\n", "...")
-            article = "\"" + article + "\""
-            article = article
+            # article_paragraphs = scrape_article(name)
+            # article = "...".join(article_paragraphs)
+            # article = article.replace("\"", "\"\"")
+            # article = article.replace("\n", "...")
+            # article = "\"" + article + "\""
+            # article = article
 
-            list_file.write(article)
+            # list_file.write(article)
 
             list_file.write("\n")
 
@@ -108,18 +112,13 @@ def scrape_article(dino_string):
 def filter_wiki_list(wiki_dinos, dev=False):
 
     valid_dinos = []
-    pictures_root = "http://dinosaurpictures.org/api/dinosaur/"
+    pictures_root = "http://dinosaurpictures.org/api/category/"
 
-    for wiki_dino in wiki_dinos:
-        pictures_request = requests.get(pictures_root+wiki_dino)
-        if pictures_request.status_code == 200:
-            if dev:
-                print("{} found on both sites, adding to list...".format(wiki_dino))
-            result = pictures_request.json()
-            valid_dino = result["name"]
-            valid_dinos.append(valid_dino)
+    pics_dinos = requests.get(pictures_root+"all").json()
 
-    return valid_dinos
+    valid_names = list(set(wiki_dinos) & set(pics_dinos))
+
+    return valid_names
 
 def scrape_wiki(site, dev=False):
 

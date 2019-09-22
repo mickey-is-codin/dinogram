@@ -1,8 +1,14 @@
-import smtplib
+import random
 
+import pandas as pd
+
+import json
+import requests
+from bs4 import BeautifulSoup
+
+import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
 import pymongo
 from pymongo import MongoClient
 
@@ -10,11 +16,27 @@ log_file = open("../../logs/refresh.txt", "w+")
 
 def main():
 
+    dino_list_path = "dino-list/valid_dinos.csv"
+
+    # Read in dino csv file
+    dino_df = pd.read_csv(dino_list_path)
+    num_dinos = dino_df.shape[0]
+
+    # Pick a random dinosaur from file
+    random_ix = random.randint(0, num_dinos)
+    random_dino_string = dino_df.iloc[random_ix,:]["dino_name"]
+
+    # Retrieve the picture urls
+    image_links = scrape_image_links(random_dino_string)
+
+    # Retrieve the wikipedia articles
+    article_paragraphs = scrape_article(random_dino_string)
+
     # Open connection to MongoDB
     client = MongoClient('localhost', 27017)
     dino_base = client.dinogram
 
-    # Build the actual html document that will comprise the email
+    # # Build the actual html document that will comprise the email
     email_html = build_html(dino_name, wiki_paragraphs, image_links, dino_base)
 
     # Send the email
@@ -127,6 +149,32 @@ def build_html(dino_name, paragraphs, image_links, dino_base):
     html = header + body + footer
 
     return html
+
+def scrape_article(dino_string):
+
+    base_url = 'https://en.wikipedia.org/wiki/'
+    article_url = base_url + dino_string
+
+    article_result = requests.get(article_url)
+    article_content = article_result.content
+    article_soup = BeautifulSoup(article_content, 'html.parser')
+
+    article_paragraphs = [p_elem.get_text() for p_elem in article_soup.find_all('p')]
+    article_paragraphs = [para for para in article_paragraphs if len(para) > 15]
+
+    return article_paragraphs
+
+def scrape_image_links(dino_string):
+
+    pictures_root = "http://dinosaurpictures.org/api/dinosaur/"
+    dino_endpoint = pictures_root+dino_string
+
+    dino_request = requests.get(dino_endpoint)
+    dino_json = dino_request.json()
+
+    image_links = [pic["votingUrl"] for pic in dino_json["pics"]]
+
+    return image_links
 
 if __name__ == "__main__":
     main()
