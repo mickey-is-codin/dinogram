@@ -12,11 +12,11 @@ from email.mime.text import MIMEText
 import pymongo
 from pymongo import MongoClient
 
-log_file = open("../../logs/refresh.txt", "w+")
+log_file = open("/home/ubuntu/DinoProject/DinoTracked/logs/refresh.txt", "w+")
 
 def main():
 
-    dino_list_path = "dino-list/valid_dinos.csv"
+    dino_list_path = "/home/ubuntu/DinoProject/DinoTracked/python-backend/v4/dino-list/valid_dinos.csv"
 
     # Read in dino csv file
     dino_df = pd.read_csv(dino_list_path)
@@ -37,7 +37,7 @@ def main():
     dino_base = client.dinogram
 
     # # Build the actual html document that will comprise the email
-    email_html = build_html(dino_name, wiki_paragraphs, image_links, dino_base)
+    email_html = build_html(random_dino_string, article_paragraphs, image_links, dino_base)
 
     # Send the email
     send_dinogram(email_html, dino_base)
